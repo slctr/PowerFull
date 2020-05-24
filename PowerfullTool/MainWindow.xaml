@@ -1,0 +1,74 @@
+﻿<Window x:Class="PowerfullTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PowerfullTool"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Powerfull Tool" Height="450" Width="800" MinHeight="450" MinWidth="800"
+        xmlns:util="clr-namespace:PowerfullTool.Utils">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                  ItemsSource="{Binding LoanApplications}" SelectedItem="{Binding SelectedLoanApplication}"
+                  IsSynchronizedWithCurrentItem="True" SelectionMode="Single"
+                  util:GridViewSort.AutoSort="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ApplicationNumber}"
+                                    util:GridViewSort.PropertyName="ApplicationNumber">Application Number</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ApplicationStatus}"
+                                    util:GridViewSort.PropertyName="ApplicationStatus">Application Status</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ApplicantDetails}"
+                                    util:GridViewSort.PropertyName="ApplicantDetails">Applicant Details</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountRequested}"
+                                    util:GridViewSort.PropertyName="AmountRequested">Amount Requested</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AmountGranted}"
+                                    util:GridViewSort.PropertyName="AmountGranted">Amount Granted</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DateOfSubmission}"
+                                    util:GridViewSort.PropertyName="DateOfSubmission">Date Of Submission</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DeletedDate}"
+                                    util:GridViewSort.PropertyName="DeletedDate">Deleted Date</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Grid.Column="0" Grid.Row="2" Content="Edit" Width="122" Height="42"
+                Command="{Binding EditCommand}" CommandParameter="{Binding SelectedLoanApplication}" />
+        <Button Grid.Column="1" Grid.Row="2" Content="Remove" Width="122" Height="42" 
+                Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedLoanApplication}" />
+
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding NewLoanApplication}" Margin="0,5,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin" Value="10,3,10,3"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock TextAlignment="Center" Text="Selected loan application:" Height="24"  />
+            <TextBlock Text="Application Status:" Margin="10,0,0,0" />
+            <TextBox Text="{Binding ApplicationStatus, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Amount Granted:" Margin="10,0,0,0" />
+            <TextBox Text="{Binding ApplicantDetails, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Amount Requested:" Margin="10,0,0,0" />
+            <TextBox Text="{Binding AmountRequested, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Amount Granted:" Margin="10,0,0,0" />
+            <TextBox Text="{Binding AmountGranted, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="DateOfSubmission:" Margin="10,0,0,0" />
+            <TextBox Text="{Binding DateOfSubmission, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <Button Grid.Column="2" Grid.Row="1" Content="Save" Width="122" Height="42" Margin="0,10,0,0"
+                Command="{Binding AddOrUpdateCommand}" CommandParameter="{Binding NewLoanApplication}" />
+        <Button Grid.Column="2" Grid.Row="2" Content="Report" Width="122" Height="42"
+                Command="{Binding ReportCommand}" CommandParameter="{Binding LoanApplications}" />
+    </Grid>
+</Window>
